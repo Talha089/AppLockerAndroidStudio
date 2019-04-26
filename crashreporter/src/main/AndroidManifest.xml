@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+          package="io.github.subhamtyagi.crashreporter">
+    <application
+        android:supportsRtl="true">
+
+        <provider
+            android:name="io.github.subhamtyagi.crashreporter.CrashReporterInitProvider"
+            android:authorities="${applicationId}.CrashReporterInitProvider"
+            android:enabled="true"
+            android:exported="false"/>
+
+        <activity
+            android:name="io.github.subhamtyagi.crashreporter.ui.CrashReporterActivity"
+            android:launchMode="singleTask"
+            android:taskAffinity="io.github.subhamtyagi.android.task"
+            android:theme="@style/CrashReporter.Theme"/>
+
+        <activity
+            android:name="io.github.subhamtyagi.crashreporter.ui.LogMessageActivity"
+            android:parentActivityName="io.github.subhamtyagi.crashreporter.ui.CrashReporterActivity"
+            android:theme="@style/CrashReporter.Theme"/>
+    </application>
+
+</manifest>
