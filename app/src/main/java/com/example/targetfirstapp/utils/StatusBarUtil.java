@@ -189,7 +189,7 @@ public class StatusBarUtil {
     public static void setColorForDrawerLayoutDiff(@NonNull Activity activity, @NonNull DrawerLayout drawerLayout, @ColorInt int color) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             activity.getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-            // Generate a rectangle with a status bar size
+            // 生成一个状态栏大小的矩形
             ViewGroup contentLayout = (ViewGroup) drawerLayout.getChildAt(0);
             if (contentLayout.getChildCount() > 0 && contentLayout.getChildAt(0) instanceof StatusBarView) {
                 contentLayout.getChildAt(0).setBackgroundColor(calculateStatusColor(color, DEFAULT_STATUS_BAR_ALPHA));

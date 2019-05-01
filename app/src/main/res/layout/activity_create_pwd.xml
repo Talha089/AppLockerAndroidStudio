@@ -55,7 +55,7 @@
     <com.example.targetfirstapp.widget.LockPatternView
         android:id="@+id/lock_pattern_view"
         android:layout_width="290dp"
-        android:layout_height="290dp"
+        android:layout_height="match_parent"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="30dp"
         android:visibility="visible" />
@@ -63,12 +63,12 @@
     <TextView
         android:id="@+id/btn_reset"
         android:layout_width="wrap_content"
-        android:layout_height="20dp"
+        android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal|bottom"
         android:gravity="center"
         android:text="@string/reset"
+        android:layout_marginBottom="10dp"
         android:textColor="@color/tr_black50"
-        android:textSize="16sp"
-        />
+        android:textSize="16sp"/>
 
 </LinearLayout>

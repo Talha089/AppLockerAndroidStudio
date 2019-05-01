@@ -12,7 +12,7 @@ import com.example.targetfirstapp.receiver.LockRestarterBroadcastReceiver;
 
 public class BackgroundManager {
 
-    private static final int period = 15 * 10; //15 minutes
+    private static final int period = 15 * 1000; //15 minutes
     private static BackgroundManager mInstance;
     private Context ctx;
 
@@ -35,13 +35,10 @@ public class BackgroundManager {
     public boolean isServiceRunning(Class<?> serviceClass) {
         checkContext();
         ActivityManager manager = (ActivityManager) ctx.getSystemService(Context.ACTIVITY_SERVICE);
-            //Add code for killing the activity
-
         for (ActivityManager.RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE)) {
             if (serviceClass.getName().equals(service.service.getClassName())) {
                 return true;
             }
-
         }
         return false;
     }
@@ -50,7 +47,6 @@ public class BackgroundManager {
         checkContext();
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
             startForegroundService(serviceClass);
-
         }else
         ctx.startService(new Intent(ctx, serviceClass));
     }

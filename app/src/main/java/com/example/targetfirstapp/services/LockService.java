@@ -27,8 +27,6 @@ import com.example.targetfirstapp.receiver.LockRestarterBroadcastReceiver;
 import com.example.targetfirstapp.utils.NotificationUtil;
 import com.example.targetfirstapp.utils.SpUtil;
 
-import java.io.DataOutputStream;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
@@ -72,7 +70,6 @@ public class LockService extends IntentService {
         mLockInfoManager = new CommLockInfoManager(this);
         activityManager = (ActivityManager) getSystemService(ACTIVITY_SERVICE);
 
-
         mServiceReceiver = new ServiceReceiver();
         IntentFilter filter = new IntentFilter();
         filter.addAction(Intent.ACTION_SCREEN_ON);
@@ -80,19 +77,13 @@ public class LockService extends IntentService {
         filter.addAction(UNLOCK_ACTION);
         registerReceiver(mServiceReceiver, filter);
 
-
-
-
-
-
-
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
             sUsageStatsManager = (UsageStatsManager) this.getSystemService(Context.USAGE_STATS_SERVICE);
         }
 
         threadIsTerminate = true;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-          //  NotificationUtil.createNotification(this, "App Lock", "App Lock running in background");
+            NotificationUtil.createNotification(this, "App Lock", "App Lock running in background");
         }
 
     }
@@ -104,21 +95,12 @@ public class LockService extends IntentService {
 
     private void runForever() {
 
-
-
         while (threadIsTerminate) {
-
-
-
-
-
             String packageName = getLauncherTopApp(LockService.this, activityManager);
-
             if (lockState && !TextUtils.isEmpty(packageName) && !inWhiteList(packageName)) {
                 boolean isLockOffScreenTime = SpUtil.getInstance().getBoolean(AppConstants.LOCK_AUTO_SCREEN_TIME, false);
                 boolean isLockOffScreen = SpUtil.getInstance().getBoolean(AppConstants.LOCK_AUTO_SCREEN, false);
                 savePkgName = SpUtil.getInstance().getString(AppConstants.LOCK_LAST_LOAD_PKG_NAME, "");
-
 
                 if (isLockOffScreenTime && !isLockOffScreen) {
                     long time = SpUtil.getInstance().getLong(AppConstants.LOCK_CURR_MILLISECONDS, 0);
@@ -228,58 +210,13 @@ public class LockService extends IntentService {
     }
 
     private void passwordLock(String packageName) {
-
-
-
-
-
         LockApplication.getInstance().clearAllActivity();
         Intent intent = new Intent(this, GestureUnlockActivity.class);
 
         intent.putExtra(AppConstants.LOCK_PACKAGE_NAME, packageName);
         intent.putExtra(AppConstants.LOCK_FROM, AppConstants.LOCK_FROM_FINISH);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-
-
-
-
-
-
-
-
-
         startActivity(intent);
-        // Killing the launched application
-
-        try {
-            activityManager.killBackgroundProcesses(savePkgName);
-
-        }
-        catch (Exception e){
-            e.printStackTrace();
-        }
-
-       /* Process suProcess = null;
-        try {
-            suProcess = Runtime.getRuntime().exec("su");
-            DataOutputStream os = new DataOutputStream(suProcess.getOutputStream());
-
-
-            os.writeBytes("adb shell" + "\n");
-
-            os.flush();
-
-            os.writeBytes("am force-stop" + savePkgName+ "\n");
-
-            os.flush();
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-       */ // up to here trying to kill the activity
-
-
-
     }
 
     @Override
@@ -288,7 +225,7 @@ public class LockService extends IntentService {
         threadIsTerminate = false;
         timer.cancel();
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-          //  NotificationUtil.cancelNotification(this);
+            NotificationUtil.cancelNotification(this);
         }
         lockState = SpUtil.getInstance().getBoolean(AppConstants.LOCK_STATE);
         if (lockState) {
@@ -302,23 +239,11 @@ public class LockService extends IntentService {
 
     @Override
     public void onTaskRemoved(Intent rootIntent) {
-
-
         super.onTaskRemoved(rootIntent);
         threadIsTerminate = false;
         timer.cancel();
-
-
-
-
-
-
-
-
-
-
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-           // NotificationUtil.cancelNotification(this);
+            NotificationUtil.cancelNotification(this);
         }
         lockState = SpUtil.getInstance().getBoolean(AppConstants.LOCK_STATE);
         if (lockState) {
