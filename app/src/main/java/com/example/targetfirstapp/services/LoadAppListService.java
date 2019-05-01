@@ -35,9 +35,10 @@ public class LoadAppListService extends IntentService {
         super.onCreate();
         mPackageManager = getPackageManager();
         mLockInfoManager = new CommLockInfoManager(this);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            NotificationUtil.createNotification(this,"App Lock","App lock Services running in background");
-        }
+
+        //if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+         //   NotificationUtil.createNotification(this,"App Lock","App lock Services running in background");
+        //}
     }
 
     @Override

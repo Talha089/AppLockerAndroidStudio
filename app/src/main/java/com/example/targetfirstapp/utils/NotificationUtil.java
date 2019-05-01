@@ -40,7 +40,7 @@ public class NotificationUtil {
                 .setSound(Settings.System.DEFAULT_NOTIFICATION_URI)
                 .setContentIntent(resultPendingIntent);
 
-           mContext.startForeground(145, mBuilder.build());
+           // mContext.startForeground(145, mBuilder.build());
     }
 
     public static void cancelNotification(Service mContext){

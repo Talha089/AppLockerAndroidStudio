@@ -73,7 +73,7 @@ public class GestureUnlockActivity extends BaseActivity implements View.OnClickL
 
     @Override
     protected void initViews(Bundle savedInstanceState) {
-        StatusBarUtil.setTransparent(this);
+       // StatusBarUtil.setTransparent(this);
         mUnLockLayout = findViewById(R.id.unlock_layout);
         mIconMore = findViewById(R.id.btn_more);
         mLockPatternView = findViewById(R.id.unlock_lock_view);
